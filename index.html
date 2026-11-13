@@ -117,9 +117,58 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
 .card-flip{flex-direction:row-reverse}
 .meal-cards{gap:28px}
 @media(max-width:900px){.card-feature,.card-flip{flex-direction:column}.card-feature .card-top{flex:none;width:100%;aspect-ratio:1/1}.card-feature .card-body{padding:28px 24px}}
+
+/* LANDMARK WATERMARKS */
+.section{position:relative;overflow:hidden}
+.section>.container{position:relative;z-index:1}
+.wm{position:absolute;pointer-events:none;z-index:0;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.wm-story{right:-40px;bottom:-10px;width:min(520px,60vw);height:min(520px,60vw);color:rgba(242,222,185,.09)}
+.wm-meal{right:-60px;top:30px;width:min(720px,80vw);height:min(360px,40vw);color:rgba(141,23,37,.07)}
+.wm-philo{left:50%;bottom:-6px;transform:translateX(-50%);width:min(900px,96vw);height:min(480px,52vw);color:rgba(214,166,75,.08)}
+.wm-pack{left:-60px;bottom:-10px;width:min(460px,55vw);height:min(460px,55vw);color:rgba(141,23,37,.06)}
+.wm-order-l,.wm-order-c,.wm-order-r{bottom:-4px;color:rgba(214,166,75,.08)}
+.wm-order-l{left:2%;width:min(420px,34vw);height:min(210px,17vw)}
+.wm-order-c{left:50%;transform:translateX(-50%);width:min(260px,22vw);height:min(260px,22vw)}
+.wm-order-r{right:2%;width:min(420px,34vw);height:min(224px,18vw)}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="lm-charminar" viewBox="0 0 300 300">
+<path d="M10 290H290M22 280H278V290M45 280V112H255V280"/>
+<path d="M110 280V196Q110 150 150 132Q190 150 190 196V280"/>
+<path d="M45 112H255M45 124H255M45 172H255M45 184H255"/>
+<path d="M52 172V149.0A7.0 7.0 0 0 1 66 149.0V172M72 172V149.0A7.0 7.0 0 0 1 86 149.0V172M92 172V149.0A7.0 7.0 0 0 1 106 149.0V172M112 172V149.0A7.0 7.0 0 0 1 126 149.0V172M132 172V149.0A7.0 7.0 0 0 1 146 149.0V172M152 172V149.0A7.0 7.0 0 0 1 166 149.0V172M172 172V149.0A7.0 7.0 0 0 1 186 149.0V172M192 172V149.0A7.0 7.0 0 0 1 206 149.0V172M212 172V149.0A7.0 7.0 0 0 1 226 149.0V172M232 172V149.0A7.0 7.0 0 0 1 246 149.0V172"/>
+<path d="M28 280V60H52V280M248 280V60H272V280"/>
+<path d="M24 112H56M24 172H56M24 232H56M244 112H276M244 172H276M244 232H276"/>
+<path d="M28 60Q40 30 52 60M248 60Q260 30 272 60M40 38V22M260 38V22"/>
+<circle cx="40" cy="19" r="3"/><circle cx="260" cy="19" r="3"/>
+<path d="M120 112Q150 70 180 112M150 80V64"/><circle cx="150" cy="61" r="3"/>
+<path d="M70 230A10 10 0 0 1 90 230V250H70ZM210 230A10 10 0 0 1 230 230V250H210Z"/>
+</symbol><symbol id="lm-ripon" viewBox="0 0 600 300">
+<path d="M10 290H590M30 290V168H570V290M24 168H576M30 180H570"/>
+<path d="M48 184V286M66 184V286M84 184V286M102 184V286M120 184V286M138 184V286M156 184V286M174 184V286M192 184V286M210 184V286M228 184V286M372 184V286M390 184V286M408 184V286M426 184V286M444 184V286M462 184V286M480 184V286M498 184V286M516 184V286M534 184V286M552 184V286"/>
+<path d="M30 236H232M368 236H570"/>
+<path d="M232 290V138H368V290M226 138H374M232 150H368"/>
+<path d="M248 290V246A52 52 0 0 1 352 246V290"/>
+<path d="M260 138V56H340V138M254 56H346"/>
+<circle cx="300" cy="94" r="20"/><path d="M300 94V80M300 94L310 99"/>
+<path d="M268 56V34H332V56M262 34H338M272 34L300 6L328 34M300 6V-4"/>
+<path d="M30 168V140H66V168M24 140H72M36 140Q48 118 60 140M534 168V140H570V168M528 140H576M540 140Q552 118 564 140"/>
+<path d="M150 168V152H178V168M422 168V152H450V168"/>
+</symbol><symbol id="lm-central" viewBox="0 0 600 320">
+<path d="M10 308H590M28 308V206H572V308M22 206H578M28 218H572"/>
+<path d="M36 308V261.0A11.0 11.0 0 0 1 58 261.0V308M64 308V261.0A11.0 11.0 0 0 1 86 261.0V308M92 308V261.0A11.0 11.0 0 0 1 114 261.0V308M120 308V261.0A11.0 11.0 0 0 1 142 261.0V308M148 308V261.0A11.0 11.0 0 0 1 170 261.0V308M176 308V261.0A11.0 11.0 0 0 1 198 261.0V308M204 308V261.0A11.0 11.0 0 0 1 226 261.0V308M364 308V261.0A11.0 11.0 0 0 1 386 261.0V308M392 308V261.0A11.0 11.0 0 0 1 414 261.0V308M420 308V261.0A11.0 11.0 0 0 1 442 261.0V308M448 308V261.0A11.0 11.0 0 0 1 470 261.0V308M476 308V261.0A11.0 11.0 0 0 1 498 261.0V308M504 308V261.0A11.0 11.0 0 0 1 526 261.0V308M532 308V261.0A11.0 11.0 0 0 1 554 261.0V308"/>
+<path d="M28 262H236M364 262H572"/>
+<path d="M36 256V233.0A7.0 7.0 0 0 1 50 233.0V256M56 256V233.0A7.0 7.0 0 0 1 70 233.0V256M76 256V233.0A7.0 7.0 0 0 1 90 233.0V256M96 256V233.0A7.0 7.0 0 0 1 110 233.0V256M116 256V233.0A7.0 7.0 0 0 1 130 233.0V256M136 256V233.0A7.0 7.0 0 0 1 150 233.0V256M156 256V233.0A7.0 7.0 0 0 1 170 233.0V256M176 256V233.0A7.0 7.0 0 0 1 190 233.0V256M196 256V233.0A7.0 7.0 0 0 1 210 233.0V256M216 256V233.0A7.0 7.0 0 0 1 230 233.0V256M364 256V233.0A7.0 7.0 0 0 1 378 233.0V256M384 256V233.0A7.0 7.0 0 0 1 398 233.0V256M404 256V233.0A7.0 7.0 0 0 1 418 233.0V256M424 256V233.0A7.0 7.0 0 0 1 438 233.0V256M444 256V233.0A7.0 7.0 0 0 1 458 233.0V256M464 256V233.0A7.0 7.0 0 0 1 478 233.0V256M484 256V233.0A7.0 7.0 0 0 1 498 233.0V256M504 256V233.0A7.0 7.0 0 0 1 518 233.0V256M524 256V233.0A7.0 7.0 0 0 1 538 233.0V256M544 256V233.0A7.0 7.0 0 0 1 558 233.0V256"/>
+<path d="M236 308V150H364V308M230 150H370M236 162H364"/>
+<path d="M262 308V250A38 38 0 0 1 338 250V308"/>
+<path d="M272 150V58H328V150M266 58H334"/>
+<circle cx="300" cy="100" r="18"/><path d="M300 100V88M300 100L309 105"/>
+<path d="M270 58L300 6L330 58M300 6V-6"/>
+<path d="M110 206V164H140V206M104 164H146M106 164L125 132L144 164"/>
+<path d="M460 206V164H490V206M454 164H496M456 164L475 132L494 164"/>
+<path d="M28 206V176H52V206M24 176H56M26 176L40 152L54 176M548 206V176H572V206M544 176H576M546 176L560 152L574 176"/>
+</symbol></defs></svg>
 <nav id="nav">
   <div class="nav-brand"><span class="dr">Rahim's</span><span class="co">Biriyani Co.<sup style="font-size:10px">®</sup></span></div>
   <ul class="nav-links">
@@ -152,6 +201,7 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
   <div class="hero-scroll"><span>SCROLL</span><svg width="14" height="22" viewBox="0 0 14 22" fill="none"><line x1="7" y1="0" x2="7" y2="16" stroke="currentColor" stroke-width="1.5"/><polyline points="2,10 7,18 12,10" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></div>
 </section>
 <section class="section story-bg" id="story">
+  <svg class="wm wm-story" aria-hidden="true"><use href="#lm-charminar"/></svg>
   <div class="container story-grid">
     <div class="fade-up">
       <span class="eyebrow">The Biryani Story</span>
@@ -171,6 +221,7 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
   </div>
 </section>
 <section class="section meal-bg" id="meal">
+  <svg class="wm wm-meal" aria-hidden="true"><use href="#lm-ripon"/></svg>
   <div class="container">
     <div style="text-align:center;margin-bottom:60px" class="fade-up">
       <span class="eyebrow">The Complete Meal</span>
@@ -202,6 +253,7 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
   </div>
 </section>
 <section class="section philo-bg" id="philosophy">
+  <svg class="wm wm-philo" aria-hidden="true"><use href="#lm-central"/></svg>
   <div class="container" style="text-align:center">
     <span class="eyebrow">Our Principles</span>
     <h2 class="section-h section-h--light" style="margin-bottom:12px">Our Food Philosophy</h2>
@@ -218,6 +270,7 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
   </div>
 </section>
 <section class="section pack-bg" id="pack">
+  <svg class="wm wm-pack" aria-hidden="true"><use href="#lm-charminar"/></svg>
   <div class="container pack-grid">
     <div class="fade-up" style="display:flex;align-items:center;justify-content:center">
       <svg viewBox="0 0 540 420" width="100%" style="max-width:500px;filter:drop-shadow(0 24px 48px rgba(84,43,36,.22))">
@@ -266,6 +319,9 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
   </div>
 </section>
 <section class="section order-bg" id="order">
+  <svg class="wm wm-order-l" aria-hidden="true"><use href="#lm-ripon"/></svg>
+  <svg class="wm wm-order-c" aria-hidden="true"><use href="#lm-charminar"/></svg>
+  <svg class="wm wm-order-r" aria-hidden="true"><use href="#lm-central"/></svg>
   <div class="container" style="text-align:center;max-width:600px;margin:0 auto">
     <span class="eyebrow">Order Now</span>
     <h2 class="order-h">Ready to Order?</h2>
