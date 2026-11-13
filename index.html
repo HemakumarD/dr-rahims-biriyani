@@ -234,6 +234,14 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
 .pay-app.off{opacity:.45;pointer-events:none}
 .pay-note{font-size:13px;color:var(--gold-lt);margin-top:12px;line-height:1.6}
 @media(hover:none) and (pointer:coarse){.pay-app{display:inline-block}}
+
+.ob-addr{grid-column:1/-1;display:flex;flex-direction:column;gap:8px}
+.ob-loc{align-self:flex-start;background:transparent;border:1px solid var(--gold);color:var(--gold-lt);border-radius:20px;padding:8px 16px;font:inherit;font-size:13px;cursor:pointer;transition:background .2s}
+.ob-loc:hover{background:rgba(214,166,75,.12)}
+.ob-loc[disabled]{opacity:.6;cursor:wait}
+.ob-loc-msg{font-size:12.5px;color:rgba(242,222,185,.65);min-height:0;margin:0}
+.ob-loc-msg:empty{display:none}
+.ob-loc-msg.err{color:#F09A9A}
 </style>
 </head>
 <body>
@@ -367,7 +375,11 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
       <div class="ob-fields">
         <input type="text" id="oName" placeholder="Your name" autocomplete="name" required>
         <input type="tel" id="oPhone" placeholder="Mobile number" autocomplete="tel" required>
-        <textarea id="oAddr" rows="2" placeholder="Delivery address" autocomplete="street-address" required></textarea>
+        <div class="ob-addr">
+          <button type="button" class="ob-loc" id="locBtn"><span aria-hidden="true">📍</span> Use my current location</button>
+          <textarea id="oAddr" rows="2" placeholder="Delivery address (door no., street, area)" autocomplete="street-address" required></textarea>
+          <p class="ob-loc-msg" id="locMsg" role="status"></p>
+        </div>
         <input type="text" id="oPin" placeholder="Pincode" inputmode="numeric" maxlength="6" autocomplete="postal-code" required>
         <p class="ob-pin-note" id="pinNote">We currently deliver to pincodes <strong>600056</strong>, <strong>600077</strong> and <strong>600116</strong> only.</p>
       </div>
@@ -460,6 +472,31 @@ document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
     if(PINCODES.includes(v)){pin.classList.add('ok');pinNote.classList.add('ok');pinNote.textContent='Great — we deliver to '+v+'.';return true}
     pin.classList.add('bad');pinNote.classList.add('bad');pinNote.innerHTML='Sorry, we don\u2019t deliver to '+v+' yet. We currently serve 600056, 600077 and 600116.';return false};
   pin.addEventListener('input',checkPin);
+  // ---- Use my current location (GPS + OpenStreetMap reverse lookup) ----
+  let geo=null;
+  const locBtn=document.getElementById('locBtn'),locMsg=document.getElementById('locMsg'),addr=document.getElementById('oAddr');
+  const locSay=(t,err)=>{locMsg.textContent=t;locMsg.classList.toggle('err',!!err)};
+  locBtn.addEventListener('click',()=>{
+    if(!('geolocation' in navigator)){locSay('Location is not available on this device — please type your address.',1);return}
+    locBtn.disabled=true;locSay('Finding your location…');
+    navigator.geolocation.getCurrentPosition(async pos=>{
+      const {latitude:lat,longitude:lon}=pos.coords;geo={lat,lon};
+      try{
+        const r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&addressdetails=1&accept-language=en`,{headers:{'Accept':'application/json'}});
+        if(!r.ok)throw 0;const d=await r.json(),a=d.address||{};
+        const parts=[a.house_number,a.building,a.road,a.neighbourhood,a.suburb||a.quarter,a.city_district,a.city||a.town||a.village,a.state].filter(Boolean);
+        const uniq=parts.filter((v,i)=>parts.indexOf(v)===i);
+        addr.value=uniq.length?uniq.join(', '):(d.display_name||'');
+        if(a.postcode){pin.value=String(a.postcode).replace(/\D/g,'').slice(0,6);checkPin()}
+        locSay('Address filled from your location — please add your door / flat number and check it.');
+        addr.focus();addr.setSelectionRange(0,0);hidePay();
+      }catch(e){locSay('We found your location but couldn\u2019t look up the address. Please type it in.',1)}
+      locBtn.disabled=false;
+    },err=>{
+      locBtn.disabled=false;
+      locSay(err.code===1?'Location permission was denied. Please allow location access, or type your address.':'Couldn\u2019t get your location. Please type your address.',1);
+    },{enableHighAccuracy:true,timeout:15000,maximumAge:60000});
+  });
   // To receive orders on WhatsApp, put the number here with country code, e.g. '919876543210'
   const ORDER_WHATSAPP='';
   const q=document.getElementById('qty'),tot=document.getElementById('orderTotal'),msg=document.getElementById('orderMsg');
@@ -474,7 +511,7 @@ document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
     const n=document.getElementById('oName').value.trim(),ph=document.getElementById('oPhone').value.trim(),ad=document.getElementById('oAddr').value.trim();
     if(!n||!ph||!ad||!pin.value){msg.textContent='Please fill in your name, mobile number, address and pincode.';return}
     if(!checkPin()){msg.textContent='Sorry, we can only accept orders for pincodes 600056, 600077 and 600116.';pin.focus();return}
-    const qty=+q.value,text=`New order — Rahim's Biriyani Co.%0A%0AChicken Biriyani Meal Pack × ${qty}%0ATotal: ${fmt(qty*PRICE)}%0A%0AName: ${encodeURIComponent(n)}%0AMobile: ${encodeURIComponent(ph)}%0AAddress: ${encodeURIComponent(ad)}%0APincode: ${pin.value}`;
+    const qty=+q.value,text=`New order — Rahim's Biriyani Co.%0A%0AChicken Biriyani Meal Pack × ${qty}%0ATotal: ${fmt(qty*PRICE)}%0A%0AName: ${encodeURIComponent(n)}%0AMobile: ${encodeURIComponent(ph)}%0AAddress: ${encodeURIComponent(ad)}%0APincode: ${pin.value}${geo?`%0ALocation: https://maps.google.com/?q=${geo.lat.toFixed(6)},${geo.lon.toFixed(6)}`:''}`;
     showPayment(qty,text);
   });
   function showPayment(qty,text){
@@ -493,7 +530,7 @@ document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
       note.innerHTML=ORDER_WHATSAPP?`After paying, <a href="https://wa.me/${ORDER_WHATSAPP}?text=${text}%0A%0APayment: ${fmt(amt)} via UPI" target="_blank" rel="noopener" style="color:var(--gold-lt)">send your order &amp; payment confirmation on WhatsApp</a>.`:'After paying, please keep your payment confirmation to show on delivery.'}
     const box=document.getElementById('payBox');box.hidden=false;box.scrollIntoView({behavior:'smooth',block:'center'});
   }
-  const hidePay=()=>{document.getElementById('payBox').hidden=true};
+  function hidePay(){document.getElementById('payBox').hidden=true}
   ['qty','oName','oPhone','oAddr','oPin'].forEach(id=>document.getElementById(id).addEventListener('input',hidePay));
   document.getElementById('qtyMinus').addEventListener('click',hidePay);
   document.getElementById('qtyPlus').addEventListener('click',hidePay);
