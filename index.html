@@ -196,7 +196,7 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
 .rv-empty{grid-column:1/-1;background:#fff;border:1px dashed rgba(141,23,37,.25);border-radius:10px;padding:40px 20px;text-align:center;color:rgba(84,43,36,.6)}
 .rv-form{background:#fff;border-radius:10px;padding:32px;margin-top:32px;box-shadow:0 4px 24px rgba(84,43,36,.07)}
 .rv-form h3{font-size:22px;color:var(--red);margin-bottom:18px}
-.rv-form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
+.rv-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
 .rv-form label{display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(84,43,36,.6);font-family:sans-serif}
 .rv-form .rv-wide{grid-column:1/-1}
 .rv-form input,.rv-form select,.rv-form textarea{font:inherit;font-size:15px;text-transform:none;letter-spacing:0;color:var(--brown);border:1px solid rgba(84,43,36,.2);border-radius:6px;padding:10px 12px;background:var(--cream-lt)}
@@ -389,44 +389,6 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
     </div>
   </div>
 </section>
-<section class="section reviews-bg" id="reviews">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:48px" class="fade-up">
-      <span class="eyebrow">Customer Reviews</span>
-      <h2 class="section-h">What Our Guests Say</h2>
-      <p class="section-p" style="max-width:560px;margin:0 auto">Tried our biriyani? Tell us how every part of the meal tasted — your feedback helps us keep the Syed family recipe at its best.</p>
-    </div>
-    <div class="rv-grid">
-      <aside class="rv-summary fade-up">
-        <div class="rv-avg" id="rvAvg">–</div>
-        <div class="rv-stars-big" id="rvAvgStars">☆☆☆☆☆</div>
-        <div class="rv-count" id="rvCount">No reviews yet</div>
-        <table class="rv-table" aria-label="Average rating by category">
-          <thead><tr><th>Section</th><th>Rating</th><th>Reviews</th></tr></thead>
-          <tbody id="rvTable"></tbody>
-        </table>
-      </aside>
-      <div class="rv-main fade-up">
-        <div class="rv-tabs" role="tablist" id="rvTabs"></div>
-        <div class="rv-list" id="rvList"></div>
-      </div>
-    </div>
-    <form class="rv-form fade-up" id="rvForm" novalidate>
-      <h3>Write a Review</h3>
-      <div class="rv-form-grid">
-        <label>Your name<input type="text" id="rvName" maxlength="40" required></label>
-        <label>Section<select id="rvCat"></select></label>
-        <label class="rv-rate-label">Your rating
-          <span class="rv-rate" id="rvRate" role="radiogroup" aria-label="Rating out of 5"></span>
-        </label>
-        <label class="rv-wide">Your review<textarea id="rvText" rows="3" maxlength="500" required></textarea></label>
-      </div>
-      <button type="submit" class="btn btn-red">Submit Review</button>
-      <p class="ob-msg" id="rvMsg" role="status"></p>
-    </form>
-  </div>
-</section>
-
 <section class="section order-bg" id="order">
   <div class="wm wm-order wm-central wm-light" aria-hidden="true"></div>
   <div class="container" style="text-align:center;max-width:640px;margin:0 auto">
@@ -474,10 +436,42 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
     </div>
   </div>
 </section>
+
+<section class="section reviews-bg" id="reviews">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px" class="fade-up">
+      <span class="eyebrow">Customer Reviews</span>
+      <h2 class="section-h">What Our Guests Say</h2>
+      <p class="section-p" style="max-width:560px;margin:0 auto">Tried our biriyani? Tell us how it tasted — your feedback helps us keep the Syed family recipe at its best.</p>
+    </div>
+    <div class="rv-grid">
+      <aside class="rv-summary fade-up">
+        <div class="rv-avg" id="rvAvg">–</div>
+        <div class="rv-stars-big" id="rvAvgStars">☆☆☆☆☆</div>
+        <div class="rv-count" id="rvCount">No reviews yet</div>
+      </aside>
+      <div class="rv-main fade-up">
+        <div class="rv-list" id="rvList"></div>
+      </div>
+    </div>
+    <form class="rv-form fade-up" id="rvForm" novalidate>
+      <h3>Write a Review</h3>
+      <div class="rv-form-grid">
+        <label>Your name<input type="text" id="rvName" maxlength="40" required></label>
+        <label class="rv-rate-label">Your rating
+          <span class="rv-rate" id="rvRate" role="radiogroup" aria-label="Rating out of 5"></span>
+        </label>
+        <label class="rv-wide">Your review<textarea id="rvText" rows="3" maxlength="500" required></textarea></label>
+      </div>
+      <button type="submit" class="btn btn-red">Submit Review</button>
+      <p class="ob-msg" id="rvMsg" role="status"></p>
+    </form>
+  </div>
+</section>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand"><span class="dr">Rahim's</span><span class="co">Biriyani Co.<sup style="font-size:10px">®</sup></span><p>Flavours of Hyderabad. Carrying a culinary legacy from the royal kitchens of the Deccan to your table, freshly sealed with care on every order.</p></div>
-    <div class="footer-col"><h4>Navigate</h4><a href="#story">Our Story</a><a href="#meal">The Meal</a><a href="#philosophy">Philosophy</a><a href="#pack">The Pack</a><a href="#reviews">Reviews</a><a href="#order">Order</a></div>
+    <div class="footer-col"><h4>Navigate</h4><a href="#story">Our Story</a><a href="#meal">The Meal</a><a href="#philosophy">Philosophy</a><a href="#pack">The Pack</a><a href="#order">Order</a><a href="#reviews">Reviews</a></div>
     <div class="footer-col"><h4>Contact</h4><a href="#">Chennai, India</a><a href="#">hello@rahimsbiriyani.in</a><a href="#">instagram</a><a href="#">facebook</a></div>
   </div>
   <div class="footer-bottom">
@@ -552,37 +546,31 @@ document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
 
 // ---------- REVIEWS ----------
 (function(){
-  const CATS=['Chicken Biriyani','Onion Raitha','Mirchi ka Salan','Packaging','Delivery'];
   const KEY='rahims-reviews';
   let reviews=[];try{reviews=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
-  let active='All',rating=0;
+  let rating=0;
   const $=id=>document.getElementById(id);
   const stars=n=>'★'.repeat(Math.round(n))+'☆'.repeat(5-Math.round(n));
-  const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  $('rvCat').innerHTML=CATS.map(c=>`<option>${c}</option>`).join('');
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   $('rvRate').innerHTML=[1,2,3,4,5].map(i=>`<button type="button" data-v="${i}" role="radio" aria-label="${i} star${i>1?'s':''}">★</button>`).join('');
   $('rvRate').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;rating=+b.dataset.v;[...$('rvRate').children].forEach(x=>{x.classList.toggle('on',+x.dataset.v<=rating);x.setAttribute('aria-checked',+x.dataset.v===rating)})});
   function render(){
-    const avg=a=>a.length?a.reduce((s,r)=>s+r.rating,0)/a.length:0;
-    const all=avg(reviews);
-    $('rvAvg').textContent=reviews.length?all.toFixed(1):'–';
-    $('rvAvgStars').textContent=reviews.length?stars(all):'☆☆☆☆☆';
+    const avg=reviews.length?reviews.reduce((s,r)=>s+r.rating,0)/reviews.length:0;
+    $('rvAvg').textContent=reviews.length?avg.toFixed(1):'–';
+    $('rvAvgStars').textContent=reviews.length?stars(avg):'☆☆☆☆☆';
     $('rvCount').textContent=reviews.length?`Based on ${reviews.length} review${reviews.length>1?'s':''}`:'No reviews yet';
-    $('rvTable').innerHTML=CATS.map(c=>{const r=reviews.filter(x=>x.cat===c);return `<tr><td>${c}</td><td>${r.length?stars(avg(r))+' '+avg(r).toFixed(1):'—'}</td><td>${r.length}</td></tr>`}).join('');
-    $('rvTabs').innerHTML=['All',...CATS].map(c=>`<button type="button" class="rv-tab" role="tab" aria-selected="${c===active}" data-c="${c}">${c}</button>`).join('');
-    const list=(active==='All'?reviews:reviews.filter(r=>r.cat===active)).slice().reverse();
-    $('rvList').innerHTML=list.length?list.map(r=>`<article class="rv-card"><div class="rv-card-top"><span class="rv-card-name">${esc(r.name)}</span><span class="rv-card-stars">${stars(r.rating)}</span></div><span class="rv-card-cat">${esc(r.cat)}</span><p>${esc(r.text)}</p><div class="rv-card-date">${new Date(r.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div></article>`).join('')
-      :`<div class="rv-empty">No reviews ${active==='All'?'yet':'for '+active+' yet'}. Be the first to share your experience below.</div>`;
+    const list=reviews.slice().reverse();
+    $('rvList').innerHTML=list.length?list.map(r=>`<article class="rv-card"><div class="rv-card-top"><span class="rv-card-name">${esc(r.name)}</span><span class="rv-card-stars">${stars(r.rating)}</span></div><p style="margin-top:10px">${esc(r.text)}</p><div class="rv-card-date">${new Date(r.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div></article>`).join('')
+      :'<div class="rv-empty">No reviews yet. Be the first to share your experience below.</div>';
   }
-  $('rvTabs').addEventListener('click',e=>{const b=e.target.closest('.rv-tab');if(!b)return;active=b.dataset.c;render()});
   $('rvForm').addEventListener('submit',e=>{
     e.preventDefault();
-    const name=$('rvName').value.trim(),text=$('rvText').value.trim(),cat=$('rvCat').value;
+    const name=$('rvName').value.trim(),text=$('rvText').value.trim();
     if(!name||!text||!rating){$('rvMsg').textContent='Please add your name, a star rating and your review.';return}
-    reviews.push({name,text,cat,rating,date:Date.now()});
+    reviews.push({name,text,rating,date:Date.now()});
     try{localStorage.setItem(KEY,JSON.stringify(reviews))}catch(err){}
     $('rvForm').reset();rating=0;[...$('rvRate').children].forEach(x=>x.classList.remove('on'));
-    $('rvMsg').textContent='Thank you! Your review has been added.';active='All';render();
+    $('rvMsg').textContent='Thank you! Your review has been added.';render();
   });
   render();
 })();
