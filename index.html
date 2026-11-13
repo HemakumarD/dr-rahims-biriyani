@@ -494,7 +494,8 @@ document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
       locBtn.disabled=false;
     },err=>{
       locBtn.disabled=false;
-      locSay(err.code===1?'Location permission was denied. Please allow location access, or type your address.':'Couldn\u2019t get your location. Please type your address.',1);
+      let inFrame=false;try{inFrame=window.self!==window.top}catch(e){inFrame=true}
+      locSay(err.code===1?(inFrame?'Location can\u2019t be used in this preview. Open the website link directly to use your location, or type your address.':'Location access is blocked for this site. Allow location in your browser settings and try again, or type your address.'):'Couldn\u2019t get your location. Check that location is turned on, or type your address.',1);
     },{enableHighAccuracy:true,timeout:15000,maximumAge:60000});
   });
   // To receive orders on WhatsApp, put the number here with country code, e.g. '919876543210'
