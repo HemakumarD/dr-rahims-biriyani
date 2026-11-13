@@ -206,6 +206,10 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
 .rv-form .btn{margin:0}
 .rv-form .ob-msg{color:var(--red);text-align:left}
 @media(max-width:900px){.rv-grid{grid-template-columns:1fr}.rv-summary{position:static}.rv-list{grid-template-columns:1fr}.rv-form-grid{grid-template-columns:1fr}}
+.order-box #oPin{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(214,166,75,.3);border-radius:6px;padding:12px 14px;color:var(--cream);font:inherit;font-size:15px;letter-spacing:2px}
+.order-box #oPin.ok{border-color:#7FB77E}.order-box #oPin.bad{border-color:#E06C6C}
+.ob-pin-note{align-self:center;font-size:12.5px;line-height:1.5;color:rgba(242,222,185,.6);margin:0}
+.ob-pin-note strong{color:var(--gold-lt)}.ob-pin-note.ok{color:#9FD29E}.ob-pin-note.bad{color:#F09A9A}
 </style>
 </head>
 <body>
@@ -428,6 +432,8 @@ footer{background:var(--black);color:var(--cream);padding:60px 48px 28px}
         <input type="text" id="oName" placeholder="Your name" autocomplete="name" required>
         <input type="tel" id="oPhone" placeholder="Mobile number" autocomplete="tel" required>
         <textarea id="oAddr" rows="2" placeholder="Delivery address" autocomplete="street-address" required></textarea>
+        <input type="text" id="oPin" placeholder="Pincode" inputmode="numeric" maxlength="6" autocomplete="postal-code" required>
+        <p class="ob-pin-note" id="pinNote">We currently deliver to pincodes <strong>600056</strong>, <strong>600077</strong> and <strong>600116</strong> only.</p>
       </div>
       <button type="submit" class="btn btn-red ob-submit">Place Order</button>
       <p class="ob-msg" id="orderMsg" role="status"></p>
@@ -457,6 +463,14 @@ document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
 // ---------- ORDER ----------
 (function(){
   const PRICE=380;
+  const PINCODES=['600056','600077','600116'];
+  const pin=document.getElementById('oPin'),pinNote=document.getElementById('pinNote');
+  const PIN_DEFAULT=pinNote.innerHTML;
+  const checkPin=()=>{const v=pin.value.replace(/\D/g,'').slice(0,6);pin.value=v;pin.classList.remove('ok','bad');pinNote.classList.remove('ok','bad');
+    if(v.length<6){pinNote.innerHTML=PIN_DEFAULT;return false}
+    if(PINCODES.includes(v)){pin.classList.add('ok');pinNote.classList.add('ok');pinNote.textContent='Great — we deliver to '+v+'.';return true}
+    pin.classList.add('bad');pinNote.classList.add('bad');pinNote.innerHTML='Sorry, we don\u2019t deliver to '+v+' yet. We currently serve 600056, 600077 and 600116.';return false};
+  pin.addEventListener('input',checkPin);
   // To receive orders on WhatsApp, put the number here with country code, e.g. '919876543210'
   const ORDER_WHATSAPP='';
   const q=document.getElementById('qty'),tot=document.getElementById('orderTotal'),msg=document.getElementById('orderMsg');
@@ -469,8 +483,9 @@ document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
   document.getElementById('orderForm').addEventListener('submit',e=>{
     e.preventDefault();upd();
     const n=document.getElementById('oName').value.trim(),ph=document.getElementById('oPhone').value.trim(),ad=document.getElementById('oAddr').value.trim();
-    if(!n||!ph||!ad){msg.textContent='Please fill in your name, mobile number and address.';return}
-    const qty=+q.value,text=`New order — Rahim's Biriyani Co.%0A%0AChicken Biriyani Meal Pack × ${qty}%0ATotal: ${fmt(qty*PRICE)}%0A%0AName: ${encodeURIComponent(n)}%0AMobile: ${encodeURIComponent(ph)}%0AAddress: ${encodeURIComponent(ad)}`;
+    if(!n||!ph||!ad||!pin.value){msg.textContent='Please fill in your name, mobile number, address and pincode.';return}
+    if(!checkPin()){msg.textContent='Sorry, we can only accept orders for pincodes 600056, 600077 and 600116.';pin.focus();return}
+    const qty=+q.value,text=`New order — Rahim's Biriyani Co.%0A%0AChicken Biriyani Meal Pack × ${qty}%0ATotal: ${fmt(qty*PRICE)}%0A%0AName: ${encodeURIComponent(n)}%0AMobile: ${encodeURIComponent(ph)}%0AAddress: ${encodeURIComponent(ad)}%0APincode: ${pin.value}`;
     if(ORDER_WHATSAPP){window.open(`https://wa.me/${ORDER_WHATSAPP}?text=${text}`,'_blank');msg.textContent=`Opening WhatsApp to send your order of ${qty} pack${qty>1?'s':''} (${fmt(qty*PRICE)}).`}
     else{msg.textContent=`Your order: ${qty} pack${qty>1?'s':''} — ${fmt(qty*PRICE)}. Online ordering is being set up; please call us to confirm.`}
   });
