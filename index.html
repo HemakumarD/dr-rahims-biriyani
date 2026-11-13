@@ -537,8 +537,9 @@ document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
     document.getElementById('payDemo').hidden=!DEMO;
     const app=document.getElementById('payApp');app.href=DEMO?'#':link;app.classList.toggle('off',DEMO);
     const note=document.getElementById('payNote');
-    if(DEMO){msg.textContent=`Order summary: ${qty} pack${qty>1?'s':''} — ${fmt(amt)}.`;note.textContent='This is a sample QR code. Online payment will be switched on shortly — please call us to confirm your order.'}
-    else{msg.textContent=`Order summary: ${qty} pack${qty>1?'s':''} — ${fmt(amt)}. Please complete payment below.`;
+    msg.textContent='';
+    if(DEMO){note.textContent=''}
+    else{
       note.innerHTML=ORDER_WHATSAPP?`After paying, <a href="https://wa.me/${ORDER_WHATSAPP}?text=${text}%0A%0APayment: ${fmt(amt)} via UPI" target="_blank" rel="noopener" style="color:var(--gold-lt)">send your order &amp; payment confirmation on WhatsApp</a>.`:'After paying, please keep your payment confirmation to show on delivery.'}
     const box=document.getElementById('payBox');box.hidden=false;box.scrollIntoView({behavior:'smooth',block:'center'});
   }
